@@ -1,3 +1,57 @@
+#############################################################################################
+################################ Navigating the tree ########################################
+#############################################################################################
+
+#############################################################################################
+################################ Searching the tree #########################################
+#############################################################################################
+
+"""
+ 1. find() 
+ 2. find_all()
+ 3. A regular expression
+ 4. True
+ 5. A fuction
+ 6. A list
+ 7. find_all(name, attrs, recursive, string, limit, **kwargs)
+ 8. Searching by CSS class
+ 9. The limit argument
+ 10. find(name, attrs, recursive, string, **kwargs)
+ 11. find_parents(name, attrs, string, limit, **kwargs)
+ 12. find_parent(name, attrs, string, **kwargs)
+ 13. find_next_siblings(name, attrs, string, limit, **kwargs)
+ 14. find_next_sibling(name, attrs, string, limit, **kwargs)
+ 15. find_previous_siblings(name, attrs, string, limit, **kwargs)
+ 16. find_previous_sibling(name, attrs, string, **kwargs)
+ 17. find_all_next(name, attrs, string, limit, **kwargs)
+ 18. find_next(name, attrs, string, **kwargs)
+ 19. find_all_previous(name, attrs, string, limit, **kwargs)
+ 20. find_previous(name, attrs, string, **kwargs)
+ 21. CSS selectors through the .css property
+
+"""
+
+#############################################################################################
+################################ Modifying the tree# ########################################
+#############################################################################################
+"""
+1. Changing tag names and attributes (tag.name = "blockquote" tag['class'] = 'verybold')
+2. Modifying .string (tag.string = "New link text.")
+3. append()  - (<a>Foo</a>  a.append("Bar") # <a>FooBar</a>)
+4. extend() - (<a>Soup</a>   a.extend(["'s", " ", "on"]) # <a>Soup's on</a>)
+5. NavigableString() and .new_tag()  - (<b>Hello</b>  tag.append(NavigableString(" there")) # <b>Hello there.</b>) if you want create new tag new_tag = soup.new_tag("a", href="http://www.example.com"))
+6. insert(), insert_before() and insert_after()
+7. .clear() removes the contents of a tag:
+8. .extract() removes a tag or string from the tree. It returns the tag or string that was extracted
+9. .decompose() removes a tag from the tree, then completely destroys it and its contents:
+10. .replace_with() extracts a tag or string from the tree, then replaces it with one or more tags or strings of your choice:
+11. .wrap() wraps an element in the Tag object you specify. It returns the new wrapper:
+12. .unwrap() is the opposite of wrap(). It replaces a tag with whatever’s inside that tag. It’s good for stripping out markup:
+13. .smooth() to clean up the parse tree by consolidating adjacent strings:
+
+
+"""
+
 # ============================= Quick start Beautifulsoup =================================== #
 
 
@@ -333,5 +387,77 @@ for sibling in soup3.find(id="link3").previous_siblings:
 
 
 
+## ========================== Searching the tree ============================================
+
+"""
+ find() 
+ find_all()
+ A regular expression
+ True
+ A fuction
+ A list
+ find_all(name, attrs, recursive, string, limit, **kwargs)
+ Searching by CSS class
+ The limit argument
+ find(name, attrs, recursive, string, **kwargs)
+ find_parents(name, attrs, string, limit, **kwargs)
+ find_parent(name, attrs, string, **kwargs)
+ find_next_siblings(name, attrs, string, limit, **kwargs)
+ find_next_sibling(name, attrs, string, limit, **kwargs)
+ find_previous_siblings(name, attrs, string, limit, **kwargs)
+ find_previous_sibling(name, attrs, string, **kwargs)
+ find_all_next(name, attrs, string, limit, **kwargs)
+ find_next(name, attrs, string, **kwargs)
+ find_all_previous(name, attrs, string, limit, **kwargs)
+ find_previous(name, attrs, string, **kwargs)
+ CSS selectors through the .css property
+
+
+"""
+
+    # ##A regular expression
+"""
+If you pass in a regular expression object, Beautiful Soup will filter against 
+that regular expression using its search() method. 
+This code finds all the tags whose names start with the letter “b”; in this case, 
+the <body> tag and the <b> tag:
+"""
+import re
+for i in soup3.find_all(re.compile("^b")):
+    # print(i.name)
+    pass
+
+""" This code finds all the tags whose names contain the letter t: """
+for i in soup3.find_all(re.compile("t")):
+    # print(i.name)
+    pass
+
+    # ## True
+""" The value True matches every tag it can. This code finds all the tags in the document, but none of the text strings: """
+for i in soup3.find_all(True):
+    # print(i.name)
+    pass
+
+    # ## A function
+""" If none of the other matches work for you, define a function that takes 
+an element as its only argument. Pass this function into find_all() """ 
+def has_class_but_no_id(tag):
+    return tag.has_attr('class') and not tag.has_attr('id')
+
+    # ## A list
+""" If you pass in a list, Beautiful Soup will finds all the <a> tags and all the <b> tags: """
+# print(soup3.find_all(['a', 'b']))
+
+    # ## Searching by CSS class
+# print(soup3.find_all("a", class_="sister"))
+
+
+    # ## The limit argument
+# print(soup3.find_all('a', limit=2)) # print only two instance
+
+
+    # ## find(name, attrs, recursive, string, **kwargs)
+""" sometimes you only want to find one result.  If find_all() cant find anything, it returns an empty list. find() returns None:"""
+soup.find('title')
 
 
