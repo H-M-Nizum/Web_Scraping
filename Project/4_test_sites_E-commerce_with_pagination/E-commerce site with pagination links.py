@@ -25,8 +25,6 @@ for i in range(1,21):
         reviews.append(review.text)
         rating = data.find_all('span', class_="ws-icon ws-icon-star")
         ratings.append(len(rating) * '⭐')
-    # lin = soup.find('a', class_="page-link")    
-    # url = "https://webscraper.io" + lin.get('href')
-    # print(url)
+
 df = pd.DataFrame({"Name":names, "Price":prices, "Description":descriptions, "Review":reviews, "Rating":ratings})
 df.to_csv("E:\\Github_New\\Web_Scraping\\Project\\4_test_sites_E-commerce_with_pagination\\laptop_pagination.csv")
